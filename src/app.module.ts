@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './infra/database/database.module';
-import { HttpModule } from './infra/http/http.module';
-import { MessagingModule } from './infra/messaging/messaging.module';
+import { DatabaseModule } from './infrastructure/database/database.module';
+import { PresentationModule } from './presentation/presentation.module';
 
 @Module({
   imports: [
@@ -10,9 +9,8 @@ import { MessagingModule } from './infra/messaging/messaging.module';
       envFilePath: `${process.env.NODE_ENV}.env`,
       isGlobal: true,
     }),
-    HttpModule,
+    PresentationModule,
     DatabaseModule,
-    MessagingModule,
   ],
 })
 export class AppModule {}

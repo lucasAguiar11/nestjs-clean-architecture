@@ -4,8 +4,6 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './exception-filter';
 import helmet from 'helmet';
-import { MicroserviceOptions } from '@nestjs/microservices';
-import { KafkaConsumerService } from './infra/messaging/kafka/kafka-consumer.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {});
@@ -26,11 +24,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
-  const kafkaConsumerService = app.get(KafkaConsumerService);
-  app.connectMicroservice<MicroserviceOptions>({
-    strategy: kafkaConsumerService,
-  });
 
   await app.startAllMicroservices();
   await app.listen(3000);
